@@ -311,9 +311,13 @@ ssh登录进入debian系统后执行以下命令：
 
 
 **备注：**
+
 CH340/CH341串口无法连接klipper解决办法：
+
 1.手机安装OCTO4A或BeamKlipper
+
 2.调整LinuxDeploy的配置，开启挂载功能，挂载点配置如下：
+
 OCTO4A：
 /data/data/com.octo4a
 /home/print3D/octo4a 
