@@ -311,6 +311,29 @@ ssh登录进入debian系统后执行以下命令：
 
 
 **备注：**
+CH340/CH341串口无法连接klipper解决办法：
+1.手机安装OCTO4A或BeamKlipper
+2.调整LinuxDeploy的配置，开启挂载功能，挂载点配置如下：
+OCTO4A：
+/data/data/com.octo4a
+/home/print3D/octo4a 
+BeamKlipper：
+/data/data/ru.ytkab0bp.beamklipper/files/serial
+/home/print3D/serial
+3.修改权限：
+cd ~
+sudo chmod -R 777 /home/print3D/octo4a  #给予octo4a 全部操作权限（sudo chmod -R 777 /home/print3D/serial）
+sudo chown -R print3D:print3D /home/print3D/octo4a   #将octo4a 文件夹及以下所有文件的用户和用户组全部修改为 print3D （sudo chown -R print3D:print3D /home/print3D/serial）
+4.重新拔插OTG线让手机再次识别MCU
+进入/home/print3D/octo4a/files 目录 ，使用  ls -l  命令，看一下 
+serialpipe  这个文件指向哪里。如：
+serialpipe > /dev/pts/2
+5.进入指向的目录 ，修改权限
+sudo chmod -R 777 /dev/pts  #给予 pts 全部操作权限
+chown -R print3D:print3D /dev/pts   #将 pts 文件夹及以下所有文件的用户和用户组全部修改为 print3D 
+6.修改klipper配置文件 print.cfg 中串口的指向为：
+/home/print3D/octo4a/files/serialpipe
+保存，重启，即可。 
 
 **构建和刷写SD卡固件请参考：https://www.klipper3d.org/Installation.html**
 
